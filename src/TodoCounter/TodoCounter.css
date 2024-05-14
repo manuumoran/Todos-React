@@ -6,6 +6,6 @@
     font-weight: normal;
 }
 
-.TodoCounter span, .TodoCounterCompleted span {
+.TodoCounter span {
     font-weight: bold;
 }
