@@ -1,6 +1,5 @@
-import React from 'react'
-import { LuLoader } from "react-icons/lu";
 import './TodosLoading.css'
+import React from 'react';
 
 function TodosLoading() {
     return (
