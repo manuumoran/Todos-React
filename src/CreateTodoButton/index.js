@@ -1,10 +1,16 @@
 import './CreateTodoButton.css'
+import React from 'react';
+import { TodoContext } from '../TodoContext';
 
-function CreateTodoButton({ onCreate }) {
+function CreateTodoButton() {
+    const {
+        createTodo
+    } = React.useContext(TodoContext)
+
     return (
         <div 
             className='button' 
-            onClick={() => {onCreate()}}
+            onClick={() => {createTodo()}}
         >
             +   
         </div>
