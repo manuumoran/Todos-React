@@ -12,6 +12,8 @@ function TodoProvider({ children }) {
       } = useLocalStorage('TODOS_V1', [])
     const [searchValue, setSearchValue] = React.useState('')
     // const [deshacer, setDeshacer] = React.useState(1)
+    const [openModal, setOpenModal] = React.useState(false)
+    const [newTodoName, setNewTodoName] = React.useState('')
 
     const completedTodos = todos.filter(todo => !!todo.completed).length;
     const totalTodos = todos.length;
@@ -40,13 +42,15 @@ function TodoProvider({ children }) {
     }
     
     const createTodo = () => {
-    const newTodo = []
-    const newTodoText = prompt('Ingrese el nombre del nuevo TODO')
-    if (newTodoText) {
-        newTodo.push({text:newTodoText, completed: false})
-        newTodo.push(...todos)
-        saveTodos(newTodo)
-    }
+        setOpenModal(!openModal)
+        const newTodo = []
+        const newTodoText = newTodoName
+        if (newTodoText) {
+            newTodo.push({text:newTodoText, completed: false})
+            newTodo.push(...todos)
+            saveTodos(newTodo)
+        }
+        setNewTodoName('')
     }
 
     // const deshacerTodos = () => {
@@ -82,7 +86,11 @@ function TodoProvider({ children }) {
             deleteTodo,
             createTodo,
             loading,
-            error 
+            error,
+            openModal,
+            setOpenModal,
+            newTodoName,
+            setNewTodoName
         }}>
             {children}
         </TodoContext.Provider>
