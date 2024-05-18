@@ -16,6 +16,7 @@ div .button {
     font-weight: bold;
     cursor: pointer;
     user-select: none;
+    z-index: 1;
 
     transform: rotate(0);
     transition: .3s ease;
