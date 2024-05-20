@@ -13,44 +13,38 @@ function TodoProvider({ children }) {
     const [searchValue, setSearchValue] = React.useState('')
     // const [deshacer, setDeshacer] = React.useState(1)
     const [openModal, setOpenModal] = React.useState(false)
-    const [newTodoName, setNewTodoName] = React.useState('')
 
     const completedTodos = todos.filter(todo => !!todo.completed).length;
     const totalTodos = todos.length;
 
-    const searchedTodos = todos.filter(
-    (todo) => {
+    const searchedTodos = todos.filter((todo) => {
         const todoText = todo.text.toLocaleLowerCase()
         const searchText = searchValue.toLocaleLowerCase()
         return todoText.includes(searchText)
-    }
-    )
+    })
 
     const completeTodo = (text) => {
-    const newTodos = [...todos]
-    const todoIndex = newTodos.findIndex(todo => todo.text === text) 
-    newTodos[todoIndex].completed = !newTodos[todoIndex].completed
-    saveTodos(newTodos)
+        const newTodos = [...todos]
+        const todoIndex = newTodos.findIndex(todo => todo.text === text) 
+        newTodos[todoIndex].completed = !newTodos[todoIndex].completed
+        saveTodos(newTodos)
     }
     
     const deleteTodo = (text) => {
-    const newTodos = [...todos]
-    const todoIndex = newTodos.findIndex(todo => todo.text === text)
-    newTodos.splice(todoIndex, 1)
-    saveTodos(newTodos)
-    // deshacerTodos()
+        const newTodos = [...todos]
+        const todoIndex = newTodos.findIndex(todo => todo.text === text)
+        newTodos.splice(todoIndex, 1)
+        saveTodos(newTodos)
+        // deshacerTodos()
     }
     
-    const createTodo = () => {
-        setOpenModal(!openModal)
-        const newTodo = []
-        const newTodoText = newTodoName
-        if (newTodoText) {
-            newTodo.push({text:newTodoText, completed: false})
-            newTodo.push(...todos)
-            saveTodos(newTodo)
+    const createTodo = (newTodoName) => {
+        const newTodos = []
+        if (newTodoName) {
+            newTodos.push({text: newTodoName, completed: false})
+            newTodos.push(...todos)
+            saveTodos(newTodos)
         }
-        setNewTodoName('')
     }
 
     // const deshacerTodos = () => {
@@ -88,9 +82,7 @@ function TodoProvider({ children }) {
             loading,
             error,
             openModal,
-            setOpenModal,
-            newTodoName,
-            setNewTodoName
+            setOpenModal
         }}>
             {children}
         </TodoContext.Provider>
