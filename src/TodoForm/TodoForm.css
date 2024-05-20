@@ -1,65 +1,74 @@
-.form-container {
-    width: 280px;
-    height: 230px;
-    display: grid;
-    grid-template-rows: 1fr auto 1fr;
-    place-items: center;
-    background-color: #F1F1F1;
-    box-sizing: border-box;
+form {
+    width: 90%;
+    max-width: 300px;
+    padding: 33px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
 }
 
 label {
+    text-align: center;
     color: black;
     font-weight: bold;
-    margin-top: 16px;
-    margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 20px;
+    margin-bottom: 26px;
 }
 
-.new-todo-input {
-    width: 220px;
+textarea {
+    background-color: #F9FBFC;
+    width: calc(100% - 25px);
     height: 100px;
     border-radius: 2px;
     border: 2px solid black;
-    box-sizing: border-box;
+    box-shadow: 0px 5px 50px rgba(32, 35, 41, 0.25);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 14px;
+    font-size: 20px;
     text-align: center;
-    padding-top: 10px;
+    padding: 12px;
     resize: none;
+    color: #1E1E1F;
 }
 
-.new-todo-input:focus {
+textarea:checked ~ 
+
+textarea:focus {
     outline-color: #6DC5D1;
 }
 
-.new-todo-input::placeholder {
-    /* padding: 0 20px 0 20px; */
+textarea::placeholder {
     color: #A5A5A5;
-    font-size: 14px;
     font-family: 'Montserrat';
     font-weight: 400;
-    position: absolute;
-    text-align: center;
 }
 
 .TodoForm-buttonContainer {
-    width: 220px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
 }
 
 .TodoForm-button {
     border: none;
-    height: 34px;
-    font-size: 14px;
+    width: 120px;
+    height: 48px;
+    font-size: 20px;
     font-family: 'Montserrat';
+    font-weight: 400;
+    color: #202329;
     cursor: pointer;
+    display: inline-block;
+}
+
+.TodoForm-button--cancel {
+    background-color: transparent;
 }
 
 .TodoForm-button--add {
     background-color: #28D8E4;
     border-radius: 2px;
+    box-shadow: 0px 5px 25px rgba(97, 218, 250, 0.5);
 }

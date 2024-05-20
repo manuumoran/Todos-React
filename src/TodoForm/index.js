@@ -4,38 +4,55 @@ import { TodoContext } from '../TodoContext';
 
 function TodoForm() {   
     const {
-        newTodoName,
-        setNewTodoName,
         createTodo,
         setOpenModal
     } = React.useContext(TodoContext)
 
+    const [newTodoName, setNewTodoName] = React.useState('')
+
+    const onClick = (event) => {
+        event.stopPropagation();
+    }
+
+    const onSubmit = () => {
+        createTodo(newTodoName)
+        setOpenModal(false)
+    }
+
+    const onCancel = () => {
+        setOpenModal(false);
+    }
+
+    const onChange = (event) => {
+        setNewTodoName(event.target.value)
+    }
+
     return (
-        <div className='form-container'>
-            <label>Escribe tu nuevo TODO</label>
-            <textarea 
-                className='new-todo-input' 
-                placeholder='Cortar cebolla para el almuerzo'
-                value={newTodoName}
-                onChange={(event) => {
-                    setNewTodoName(event.target.value)
-                }}
-            />
-            <div className='TodoForm-buttonContainer'>
-                <button 
-                    className="TodoForm-button TodoForm-button--cancel" 
-                    onClick={() => {
-                        setOpenModal(state => !state)
-                        setNewTodoName('') 
-                    }}>   
-                    Cancelar
-                </button>
-                <button 
-                    className="TodoForm-button TodoForm-button--add" 
-                    onClick={() => {createTodo()}}>
-                    Añadir
-                </button>
-            </div>
+        <div onClick={onClick}>
+            <form onSubmit={onSubmit}>
+                <label>Escribe tu nuevo TODO</label>
+                <textarea 
+                    placeholder='Cortar cebolla para el almuerzo'
+                    value={newTodoName}
+                    onChange={onChange}
+                    required
+                />
+                <div className='TodoForm-buttonContainer'>
+                    <button 
+                        type='button'
+                        className="TodoForm-button TodoForm-button--cancel" 
+                        onClick={onCancel}
+                    >   
+                        Cancelar
+                    </button>
+                    <button
+                        type='submit'
+                        className='TodoForm-button TodoForm-button--add'
+                    >
+                        Añadir
+                    </button>
+                </div>
+            </form>
         </div>
     );
 }
