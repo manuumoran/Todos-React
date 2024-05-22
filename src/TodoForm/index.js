@@ -1,6 +1,7 @@
 import React from 'react';
 import './TodoForm.css'
 import { TodoContext } from '../TodoContext';
+import clsx from 'clsx';
 
 function TodoForm() {   
     const {
@@ -9,14 +10,24 @@ function TodoForm() {
     } = React.useContext(TodoContext)
 
     const [newTodoName, setNewTodoName] = React.useState('')
+    const [error, setError] = React.useState(false)
+    const [shake, setShake] = React.useState(false)
 
     const onClick = (event) => {
         event.stopPropagation();
     }
 
-    const onSubmit = () => {
-        createTodo(newTodoName)
-        setOpenModal(false)
+    const onSubmit = (event) => {
+        event.preventDefault()
+        if (!newTodoName) {
+            setError(true)
+            setShake(true)
+            setTimeout(() => setShake(false), 200)
+
+        } else {
+            createTodo(newTodoName)
+            setOpenModal(false)             
+        }
     }
 
     const onCancel = () => {
@@ -28,14 +39,20 @@ function TodoForm() {
     }
 
     return (
-        <div onClick={onClick}>
+        <div 
+            onClick={onClick} 
+            className='form-container'
+        >
             <form onSubmit={onSubmit}>
                 <label>Escribe tu nuevo TODO</label>
                 <textarea 
+                    className={clsx({
+                        'textarea-error-shake': shake,
+                        'textarea-error': error
+                    })}
                     placeholder='Cortar cebolla para el almuerzo'
                     value={newTodoName}
                     onChange={onChange}
-                    required
                 />
                 <div className='TodoForm-buttonContainer'>
                     <button 
