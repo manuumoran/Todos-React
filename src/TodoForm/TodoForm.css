@@ -1,3 +1,8 @@
+.form-container {
+    width: 100%;
+    pointer-events: none;
+}
+
 form {
     width: 90%;
     max-width: 300px;
@@ -7,6 +12,8 @@ form {
     justify-content: center;
     align-items: center;
     background-color: #fff;
+    margin: 0 auto;
+    pointer-events: auto;
 }
 
 label {
@@ -32,7 +39,13 @@ textarea {
     color: #1E1E1F;
 }
 
-textarea:checked ~ 
+.textarea-error {
+    border-color: red;
+}
+
+.textarea-error-shake {
+    animation: shake 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
 textarea:focus {
     outline-color: #6DC5D1;
@@ -71,4 +84,19 @@ textarea::placeholder {
     background-color: #28D8E4;
     border-radius: 2px;
     box-shadow: 0px 5px 25px rgba(97, 218, 250, 0.5);
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    33% {
+        transform: translateX(10px);
+    }
+    66% {
+        transform: translateX(-10px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
