@@ -24,6 +24,6 @@
 
 .button-close {
     transform: rotate(224deg);
-    /* background-color: #d2122e; */
-    /* box-shadow: 0px 5px 25px rgba(255, 0, 0, 0.5); */
+    background-color: #d2122e;
+    box-shadow: 0px 5px 25px rgba(255, 0, 0, 0.5);
 }
