@@ -5,13 +5,19 @@ import { TodoContext } from '../TodoContext';
 
 function Modal({ children }) {
     const {
-        setOpenModal
+        setOpenModal,
+        setTextToEdit
     } = React.useContext(TodoContext)
+
+    const onClick = () => {
+        setOpenModal(false)
+        setTextToEdit('')
+    }
 
     return ReactDOM.createPortal(
         <div 
             className='ModalBackground'
-            onClick={() => setOpenModal(false)}
+            onClick={onClick}
         >
             {children} 
         </div>,

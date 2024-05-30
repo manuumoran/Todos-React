@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import './TodoForm.css'
 import { TodoContext } from '../TodoContext';
 import clsx from 'clsx';
@@ -6,12 +6,16 @@ import clsx from 'clsx';
 function TodoForm() {   
     const {
         createTodo,
-        setOpenModal
+        setOpenModal,
+        textToEdit,
+        editTodo
     } = React.useContext(TodoContext)
 
     const [newTodoName, setNewTodoName] = React.useState('')
+    const [newTodoNameToEdit, setNewTodoNameToEdit] = React.useState(textToEdit)
     const [error, setError] = React.useState(false)
     const [shake, setShake] = React.useState(false)
+    const textareaRef = useRef(null);
 
     const onClick = (event) => {
         event.stopPropagation();
@@ -19,40 +23,59 @@ function TodoForm() {
 
     const onSubmit = (event) => {
         event.preventDefault()
-        if (!newTodoName) {
+        if (!newTodoName && !newTodoNameToEdit) {
             setError(true)
             setShake(true)
             setTimeout(() => setShake(false), 200)
-
         } else {
-            createTodo(newTodoName)
-            setOpenModal(false)             
+            if (textToEdit) {
+                editTodo(newTodoNameToEdit)
+                setOpenModal(false)             
+            } else {
+                createTodo(newTodoName)
+                setOpenModal(false)             
+            }
         }
     }
+
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13 && !event.shiftKey) {
+            event.preventDefault(); // Prevent the default Enter key behavior (new line)
+            onSubmit(event)
+        }
+    }
+
+    useEffect(() => {
+        textareaRef.current.focus();
+        textareaRef.current.setSelectionRange(textareaRef.current.value.length, textareaRef.current.value.length);
+    }, []);
 
     const onCancel = () => {
         setOpenModal(false);
     }
 
     const onChange = (event) => {
-        setNewTodoName(event.target.value)
+        !textToEdit ? setNewTodoName(event.target.value) : setNewTodoNameToEdit(event.target.value)
     }
 
     return (
         <div 
             onClick={onClick} 
             className='form-container'
-        >
+        > 
             <form onSubmit={onSubmit}>
-                <label>Escribe tu nuevo TODO</label>
+                <label>{!textToEdit ? 'Escribe tu nuevo TODO' : 'Edita tu TODO'}</label>
                 <textarea 
                     className={clsx({
                         'textarea-error-shake': shake,
                         'textarea-error': error
                     })}
                     placeholder='Cortar cebolla para el almuerzo'
-                    value={newTodoName}
+                    value={!textToEdit ? newTodoName : newTodoNameToEdit}
                     onChange={onChange}
+                    ref={textareaRef}
+                    autoFocus
+                    onKeyDown={handleKeyDown}
                 />
                 <div className='TodoForm-buttonContainer'>
                     <button 

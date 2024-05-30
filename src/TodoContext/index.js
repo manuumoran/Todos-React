@@ -9,10 +9,12 @@ function TodoProvider({ children }) {
         saveItem: saveTodos,
         loading,
         error
-      } = useLocalStorage('TODOS_V1', [])
+    } = useLocalStorage('TODOS_V1', [])
+    
     const [searchValue, setSearchValue] = React.useState('')
     // const [deshacer, setDeshacer] = React.useState(1)
     const [openModal, setOpenModal] = React.useState(false)
+    const [textToEdit, setTextToEdit] = React.useState('')
 
     const completedTodos = todos.filter(todo => !!todo.completed).length;
     const totalTodos = todos.length;
@@ -29,7 +31,22 @@ function TodoProvider({ children }) {
         newTodos[todoIndex].completed = !newTodos[todoIndex].completed
         saveTodos(newTodos)
     }
-    
+
+    const triggerEditTodo = (text) => {
+        setOpenModal(true)
+        setTextToEdit(text)
+    }
+
+    const editTodo = (newTodoName) => {
+        if (newTodoName) {
+            const newTodos = [...todos]
+            const todoIndex = newTodos.findIndex(todo => todo.text === textToEdit) 
+            newTodos[todoIndex].text = newTodoName
+            saveTodos(newTodos)
+        }
+        setTextToEdit('')
+    }
+
     const deleteTodo = (text) => {
         const newTodos = [...todos]
         const todoIndex = newTodos.findIndex(todo => todo.text === text)
@@ -69,6 +86,13 @@ function TodoProvider({ children }) {
     //   }
     // }
 
+    // if (todos.text === undefined) {
+    //     const newTodos = [...todos]
+    //     const todoIndex = newTodos.findIndex(todo => todo.text === undefined)
+    //     newTodos.splice(todoIndex, 1)
+    //     saveTodos(newTodos)
+    // }
+
     return (
         <TodoContext.Provider value={{
             completedTodos,
@@ -77,12 +101,16 @@ function TodoProvider({ children }) {
             setSearchValue,
             searchedTodos,
             completeTodo,
+            triggerEditTodo,
+            editTodo,
             deleteTodo,
             createTodo,
             loading,
             error,
             openModal,
-            setOpenModal
+            setOpenModal,
+            textToEdit,
+            setTextToEdit
         }}>
             {children}
         </TodoContext.Provider>

@@ -17,7 +17,8 @@ function AppUI() {
     deleteTodo,
     loading,
     error,
-    openModal
+    openModal,
+    triggerEditTodo
   } = React.useContext(TodoContext)
 
   return (
@@ -42,6 +43,7 @@ function AppUI() {
             completed={todo.completed}
             onComplete={completeTodo}
             onDelete={deleteTodo}
+            onEdit={triggerEditTodo}
           />
         ))}
       </TodoList>
